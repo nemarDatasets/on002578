@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "dataset_id": "on002578",
+  "source": "openneuro",
+  "source_id": "ds002578",
+  "title": "Visual Oddball Task (256 channels)",
+  "authors": {
+    "Arnaud Delorme": {},
+    "Scott Makeig": {}
+  },
+  "license": "CC0",
+  "dataset_type": "raw",
+  "related_identifiers": [
+    {
+      "identifier": "10.18112/openneuro.ds002578.v1.1.0",
+      "identifier_type": "DOI",
+      "relation_type": "IsIdenticalTo"
+    }
+  ],
+  "pipeline_stage": "seeded"
+}
