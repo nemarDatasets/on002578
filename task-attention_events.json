@@ -1,0 +1,47 @@
+{
+  "onset": {
+    "LongName": "Event onset",
+    "Description": "Onset of the event measured from the beginning of the recording.",
+    "Units": "s"
+  },
+  "duration": {
+    "LongName": "Event duration",
+    "Description": "Duration of the event (measured from onset).",
+    "Units": "s"
+  },
+  "sample": {
+    "LongName": "Sample",
+    "Description": "Onset of the event measured in samples (relative to the start of the recording)."
+  },
+  "trial_type": {
+    "LongName": "Event categorization",
+    "Description": "Primary categorisation of each trial."
+  },
+  "response_time": {
+    "LongName": "Response time",
+    "Description": "Response time measured in seconds.",
+    "Units": "s"
+  },
+  "stim_file": {
+    "LongName": "Stimulus file location",
+    "Description": "Represents the location of the stimulus file (image, video, sound etc.) presented at the given onset time. They should be stored in the /stimuli folder (under the root folder of the dataset; with optional subfolders). The values under the stim_file column correspond to a path relative to \"/stimuli\"."
+  },
+  "value": {
+    "LongName": "Event marker",
+    "Description": "Marker value associated with the event. Numeric cells are trigger codes recorded at the event onset. String cells ('Picture', 'Response', 'boundary') describe the event class (these were carried over from the original OpenNeuro export where 'Picture' marks a stimulus onset, 'Response' marks a key press, and 'boundary' marks a recording-discontinuity boundary).",
+    "HED": {
+      "33": "Drawing, (Item-count/5, Square), Target, (Attend-to, X-Position/3), (Cue, X-Position/3), Unexpected, Oddball",
+      "44": "Drawing, (Item-count/5, Square), Target, (Attend-to, X-Position/4), (Cue, X-Position/4), Unexpected, Oddball",
+      "boundary": "Pause, Discontinuous",
+      "Response": "Participant-response, (Keyboard-key, Press), Agent-action",
+      "34": "Drawing, (Item-count/5, Square), Non-target, (Attend-to, X-Position/3), (Cue, X-Position/4), Expected, Distractor",
+      "45": "Drawing, (Item-count/5, Square), Non-target, (Attend-to, X-Position/4), (Cue, X-Position/5), Expected, Distractor",
+      "35": "Drawing, (Item-count/5, Square), Non-target, (Attend-to, X-Position/3), (Cue, X-Position/5), Expected, Distractor",
+      "Picture": "Experimental-stimulus, Drawing",
+      "41": "Drawing, (Item-count/5, Square), Non-target, (Attend-to, X-Position/4), (Cue, X-Position/1), Expected, Distractor",
+      "31": "Drawing, (Item-count/5, Square), Non-target, (Attend-to, X-Position/3), (Cue, X-Position/1), Expected, Distractor",
+      "42": "Drawing, (Item-count/5, Square), Non-target, (Attend-to, X-Position/4), (Cue, X-Position/2), Expected, Distractor",
+      "43": "Drawing, (Item-count/5, Square), Non-target, (Attend-to, X-Position/4), (Cue, X-Position/3), Expected, Distractor"
+    }
+  }
+}
