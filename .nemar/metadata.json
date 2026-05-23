@@ -1,21 +1,74 @@
 {
   "version": "2.0",
-  "dataset_id": "on002578",
-  "source": "openneuro",
-  "source_id": "ds002578",
+  "pipeline_stage": "validated",
   "title": "Visual Oddball Task (256 channels)",
+  "license": "CC0",
+  "dataset_type": "raw",
   "authors": {
     "Arnaud Delorme": {},
     "Scott Makeig": {}
   },
-  "license": "CC0",
-  "dataset_type": "raw",
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds002578.v1.1.0",
       "identifier_type": "DOI",
-      "relation_type": "IsIdenticalTo"
+      "relation_type": "IsDerivedFrom"
+    },
+    {
+      "identifier": "https://github.com/nemarDatasets/on002578",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on002578",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "10.82901/nemar.on002578",
+      "identifier_type": "DOI",
+      "relation_type": "IsPartOf"
     }
   ],
-  "pipeline_stage": "seeded"
+  "modalities": [
+    "anat",
+    "eeg"
+  ],
+  "resource_type_specific": "Structural MRI Dataset",
+  "sizes": [
+    "1.4 GB (10 files)"
+  ],
+  "formats": [
+    ".gitattributes",
+    ".gz",
+    ".json",
+    ".m",
+    ".md",
+    ".set",
+    ".tsv",
+    ".yml"
+  ],
+  "description": "A high-density EEG dataset from a visual oddball selective attention task recorded with 256 channels at the Swartz Center for Computational Neuroscience. The dataset includes anatomical MRI scans and precisely localized electrode positions, enabling source-level analysis. Data were collected in 2004 and represent an expanded version of a prior 32-channel study using identical experimental protocols.",
+  "methods_description": "EEG data were acquired using 256-channel BIOSEMI BDF format with reference to electrode 135. Electrode positions were scanned and anatomical MRI images were acquired for each participant. Raw data were preprocessed including fusion of BDF files, integration with presentation timing information, event cleaning, and HED tag annotation. MRI data were converted to NIFTI format and reoriented.",
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "visual oddball task"
+    },
+    {
+      "term": "selective attention"
+    },
+    {
+      "term": "event-related potentials"
+    },
+    {
+      "term": "source localization"
+    },
+    {
+      "term": "high-density EEG"
+    }
+  ],
+  "source_hash": "a0ae2dd0979640ef22904fd7de7f39a9c570e133d85dbb9f10a03d99c9a82d38"
 }
