@@ -18,29 +18,29 @@ Raw data manipulation before export:
 
 ## NEMAR curation changes (2026-05-21, revised 2026-05-27)
 
-BIDS validator: 7 errors + 109 warnings → 0 errors + 95 warnings. Raw `.set`/`.fdt` binary payloads unchanged.
+The BIDS validator went from 7 errors + 109 warnings to 0 errors + 95 warnings. None of the raw `.set`/`.fdt` recording files were modified — every change is to a text sidecar.
 
-### `participants.tsv`
-- Header had `participant_id` listed twice (`participant_id, gender, participant_id, age`), and the duplicate column repeated the subject ID. Dropped the duplicate so the header is `participant_id, gender, age`. Two data rows now read `sub-001 F 30` and `sub-002 M 30`. Closes the `TSV_COLUMN_HEADER_DUPLICATE`, `TSV_COLUMN_MISSING`, and `PARTICIPANT_ID_MISMATCH` errors.
+**Participant table (`participants.tsv`)**
+- The header listed `participant_id` twice (`participant_id, gender, participant_id, age`), and the duplicate column just repeated the subject ID. The duplicate was dropped, so the header now reads `participant_id, gender, age` and the two rows read `sub-001 F 30` and `sub-002 M 30`.
 
-### `dataset_description.json`
-- `BIDSVersion`: `"v1.2.1"` → `"1.11.1"` (set to the BIDS version the validator checks against; also drops the non-canonical leading `v`). Closes `UNKNOWN_BIDS_VERSION`.
-- Added `DatasetType: "raw"`. Why: without it, the validator treats the dataset under derivative-rules and emits spurious warnings.
-- `GeneratedBy` is left as the source published it (absent). The original OpenNeuro dataset declares no generation tooling, and the NEMAR rehost only fixes validator issues — which is not dataset generation — so nothing is added here.
+**Dataset description (`dataset_description.json`)**
+- `BIDSVersion` was `"v1.2.1"`, too old for the current validator (and the leading `v` is not canonical); set to `"1.11.1"`, the version the validator checks against.
+- Added `DatasetType: "raw"` so the dataset is validated as raw data rather than a derivative.
+- A generation-tooling entry (`GeneratedBy`) was left absent, exactly as the source published it. The original OpenNeuro dataset declares no such tooling, and this cleanup only fixes validator issues — which is not dataset generation — so nothing was invented here.
 
-### `sub-NNN/eeg/sub-NNN_task-attention_electrodes.tsv` (2 files)
-- `git mv` to `sub-NNN/eeg/sub-NNN_electrodes.tsv` (dropped the `task-` entity — electrode positions are subject-level, not task-level per BIDS). Closes `EXCESSIVE_ELECTRODE_SPECIFICITY` ×2 and dependent `SIDECAR_KEY_RECOMMENDED:TaskName` warnings.
+**Electrode tables (`sub-NNN_electrodes.tsv`, both subjects)**
+- These were named `sub-NNN_task-attention_electrodes.tsv`. Electrode positions are a property of the subject, not of a task, so the `task-attention` part of the name was removed (a plain file rename — the contents are unchanged).
 
-### `sub-NNN/eeg/sub-NNN_task-attention_coordsystem.json` (2 files)
-- `git mv` to `sub-NNN/eeg/sub-NNN_coordsystem.json` (same rationale). Closes `EXCESSIVE_COORDSYSTEM_SPECIFICITY` ×2 and `JSON_SCHEMA_VALIDATION_ERROR:EEGCoordinateSystem` (file contents unchanged; value `"CTF"` is a valid BIDS coordinate system once the file is at the subject-level path).
+**Coordinate-system files (`sub-NNN_coordsystem.json`, both subjects)**
+- Renamed the same way, from `sub-NNN_task-attention_coordsystem.json` to `sub-NNN_coordsystem.json`, for the same reason. The contents are unchanged; the `"CTF"` coordinate system is valid once the file sits at the subject level.
 
-### `task-attention_events.json` (new, consolidating root sidecar)
-- Created at dataset root, replacing the two byte-identical per-subject `_events.json` files (removed) plus the orphan root `events.json` (also removed). BIDS inheritance carries this single file to both subjects.
-- All time columns (`onset`, `duration`, `response_time`): `"Units": "second"` → `"Units": "s"` (BIDS-canonical SI symbol).
-- Added `sample` column definition (was undocumented).
-- `value` column: removed the obsolete `Levels` block — the old keys `x11..x55` did not match any cells in `events.tsv`, which is what triggered the `TSV_VALUE_INCORRECT_TYPE` errors on bare numerics like `34` (sub-001 line 249) and `35` (sub-002 line 252). Closes both errors.
-- `value` column: preserved the HED dictionary from the orphan root `events.json` (12 entries: numeric trigger codes 31/33-35/41-45 plus the string classes `Picture`, `Response`, `boundary`) and re-anchored it under `value.HED` to match the actual column name in `events.tsv`. The orphan had nested it under a non-existent column `type`, so the annotations were unreachable; their content is unchanged.
+**Event description (`task-attention_events.json`) — new shared sidecar at the dataset root**
+- The two subjects previously each carried a byte-identical per-subject `_events.json`, and there was also an orphan `events.json` at the root. These were replaced with a single `task-attention_events.json` at the dataset root, which BIDS automatically applies to both subjects.
+- The time columns (`onset`, `duration`, `response_time`) gave their unit as `"second"`; changed to the BIDS-standard symbol `"s"`.
+- Added a definition for the `sample` column, which was previously undocumented.
+- Removed an obsolete list of allowed values (`Levels`) on the `value` column. Its old keys (`x11`..`x55`) matched no cells in `events.tsv`, which is why the validator rejected the plain numbers actually present (e.g. `34` on sub-001, `35` on sub-002).
+- Kept the HED annotation dictionary that had been sitting in the orphan root `events.json` (12 entries: the numeric trigger codes 31, 33–35, 41–45, plus the labels `Picture`, `Response`, and `boundary`). In the orphan it was attached to a column named `type` that does not exist, so the annotations were unreachable; they are now attached to the real `value` column. Their content is unchanged.
 
-### Removed files
-- `events.json` (root) — orphan that nested HED tags under a non-existent column `type`. Salvageable HED entries now live in the new `task-attention_events.json` under `value.HED`. Removing this file also closes the `HED_ERROR:SIDECAR_INVALID` on sub-001.
-- `sub-001/eeg/sub-001_task-attention_events.json`, `sub-002/eeg/sub-002_task-attention_events.json` — byte-identical to each other; both replaced by the inheriting root sidecar.
+**Removed files**
+- The orphan root `events.json` was removed; its usable HED annotations were salvaged into the new `task-attention_events.json` (see above).
+- The two per-subject `sub-001/eeg/sub-001_task-attention_events.json` and `sub-002/eeg/sub-002_task-attention_events.json` files were removed; they were byte-identical to each other and are now covered by the single inheriting root sidecar.
