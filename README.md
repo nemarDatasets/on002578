@@ -16,17 +16,17 @@ Raw data manipulation before export:
 - Add HED tags (see addHEDTags.m)
 - Convert MRI to NIFTI format (MRIcron) and reorient (MRIcrogl) (see convert_nifti.m)
 
-## NEMAR curation changes (2026-05-21)
+## NEMAR curation changes (2026-05-21, revised 2026-05-27)
 
-BIDS validator: 7 errors + 109 warnings → 0 errors + 94 warnings. Raw `.set`/`.fdt` binary payloads unchanged.
+BIDS validator: 7 errors + 109 warnings → 0 errors + 95 warnings. Raw `.set`/`.fdt` binary payloads unchanged.
 
 ### `participants.tsv`
 - Header had `participant_id` listed twice (`participant_id, gender, participant_id, age`), and the duplicate column repeated the subject ID. Dropped the duplicate so the header is `participant_id, gender, age`. Two data rows now read `sub-001 F 30` and `sub-002 M 30`. Closes the `TSV_COLUMN_HEADER_DUPLICATE`, `TSV_COLUMN_MISSING`, and `PARTICIPANT_ID_MISMATCH` errors.
 
 ### `dataset_description.json`
-- `BIDSVersion`: `"v1.2.1"` → `"1.8.0"` (BIDS-canonical, no leading `v`). Closes `UNKNOWN_BIDS_VERSION`.
-- Added `DatasetType: "raw"`.
-- Added `GeneratedBy: [{Name: "nemar-cli", Version: "0.8.8", CodeURL: "https://github.com/nemar-org/nemar-cli"}]`.
+- `BIDSVersion`: `"v1.2.1"` → `"1.11.1"` (set to the BIDS version the validator checks against; also drops the non-canonical leading `v`). Closes `UNKNOWN_BIDS_VERSION`.
+- Added `DatasetType: "raw"`. Why: without it, the validator treats the dataset under derivative-rules and emits spurious warnings.
+- `GeneratedBy` is left as the source published it (absent). The original OpenNeuro dataset declares no generation tooling, and the NEMAR rehost only fixes validator issues — which is not dataset generation — so nothing is added here.
 
 ### `sub-NNN/eeg/sub-NNN_task-attention_electrodes.tsv` (2 files)
 - `git mv` to `sub-NNN/eeg/sub-NNN_electrodes.tsv` (dropped the `task-` entity — electrode positions are subject-level, not task-level per BIDS). Closes `EXCESSIVE_ELECTRODE_SPECIFICITY` ×2 and dependent `SIDECAR_KEY_RECOMMENDED:TaskName` warnings.
