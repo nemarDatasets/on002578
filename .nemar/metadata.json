@@ -2,12 +2,41 @@
   "version": "2.0",
   "pipeline_stage": "validated",
   "title": "Visual Oddball Task (256 channels)",
+  "description": "High-density (256-channel) EEG recordings from a visual oddball selective attention task collected in 2004 at the Swartz Center for Computational Neuroscience, UCSD. The dataset extends an earlier 32-channel corpus using the same experimental paradigm, and adds scanned electrode positions and anatomical MRI to allow precise source localization. Events are annotated with HED tags.",
+  "methods_description": "EEG was recorded with a 256-channel BioSemi system and referenced to electrode 135. BDF files were fused with stimulus presentation information, and spurious events were removed. HED tags were added, and electrode positions were scanned. Anatomical MRI was converted to NIfTI format.",
   "license": "CC0",
   "dataset_type": "raw",
   "authors": {
     "Arnaud Delorme": {},
     "Scott Makeig": {}
   },
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "visual oddball task"
+    },
+    {
+      "term": "selective attention"
+    },
+    {
+      "term": "high-density EEG"
+    },
+    {
+      "term": "source localization"
+    },
+    {
+      "term": "Magnetic Resonance Imaging",
+      "subject_scheme": "MeSH",
+      "value_uri": "http://id.nlm.nih.gov/mesh/D008279"
+    },
+    {
+      "term": "Attention",
+      "subject_scheme": "MeSH",
+      "value_uri": "http://id.nlm.nih.gov/mesh/D001288"
+    }
+  ],
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds002578.v1.1.0",
@@ -20,23 +49,18 @@
       "relation_type": "IsDescribedBy"
     },
     {
-      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on002578",
+      "identifier": "https://nemar.org/dataset/on002578",
       "identifier_type": "URL",
       "relation_type": "IsDescribedBy"
-    },
-    {
-      "identifier": "10.82901/nemar.on002578",
-      "identifier_type": "DOI",
-      "relation_type": "IsPartOf"
     }
   ],
+  "resource_type_specific": "Structural MRI Dataset",
   "modalities": [
     "anat",
     "eeg"
   ],
-  "resource_type_specific": "Structural MRI Dataset",
   "sizes": [
-    "1.4 GB (10 files)"
+    "1.33 GB (10 files)"
   ],
   "formats": [
     ".gitattributes",
@@ -48,27 +72,6 @@
     ".tsv",
     ".yml"
   ],
-  "description": "A high-density EEG dataset from a visual oddball selective attention task recorded with 256 channels at the Swartz Center for Computational Neuroscience. The dataset includes anatomical MRI scans and precisely localized electrode positions, enabling source-level analysis. Data were collected in 2004 and represent an expanded version of a prior 32-channel study using identical experimental protocols.",
-  "methods_description": "EEG data were acquired using 256-channel BIOSEMI BDF format with reference to electrode 135. Electrode positions were scanned and anatomical MRI images were acquired for each participant. Raw data were preprocessed including fusion of BDF files, integration with presentation timing information, event cleaning, and HED tag annotation. MRI data were converted to NIFTI format and reoriented.",
-  "keywords": [
-    {
-      "term": "EEG"
-    },
-    {
-      "term": "visual oddball task"
-    },
-    {
-      "term": "selective attention"
-    },
-    {
-      "term": "event-related potentials"
-    },
-    {
-      "term": "source localization"
-    },
-    {
-      "term": "high-density EEG"
-    }
-  ],
-  "source_hash": "a0ae2dd0979640ef22904fd7de7f39a9c570e133d85dbb9f10a03d99c9a82d38"
+  "resource_type_general": "Dataset",
+  "source_hash": "a73bcb6a997cf3bffc7fe8969d14895244c010f68998b67e54ccd56ad6093f88"
 }
